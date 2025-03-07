@@ -1,0 +1,69 @@
+/* Centrer et styliser le conteneur du formulaire */
+form {
+    background: #FFFCF2;  /* Soft Cream */
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;  /* Largeur à 100% */
+    max-width: 500px; /* Largeur maximale du formulaire */
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; /* Inclure padding et border dans la largeur */
+}
+
+/* Aligner proprement chaque label + champ */
+form label {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #403D39; /* Dark Gray */
+}
+
+/* Assurez-vous que les champs (select, input, button) ont une largeur et ne dépassent pas */
+form select, form input, form button {
+    width: 100%; /* Largeur à 100% pour tous les champs */
+    max-width: 400px; /* Largeur maximale pour les champs */
+    padding: 10px;
+    border: 2px solid #403D39; /* Dark Gray border */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #FFFCF2;  /* Soft Cream */
+    color: #252422; /* Deep Black-Brown text */
+    box-sizing: border-box; /* Inclure padding et border dans la largeur */
+}
+
+/* Centrer et mieux afficher le champ Upload */
+#file {
+    width: 100%;  /* Même largeur que les autres champs */
+    max-width: 400px; /* Largeur maximale pour le champ upload */
+    margin-top: 10px;
+    box-sizing: border-box; /* Inclure padding et border dans la largeur */
+}
+
+/* Styliser le bouton pour qu'il s’intègre bien */
+button {
+    background: #EB5E28; /* Warm Orange */
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+    max-width: 400px; /* Largeur maximale pour le bouton */
+    box-sizing: border-box; /* Inclure padding et border dans la largeur */
+}
+
+button:hover {
+    background: #D04C1C; /* Slightly darker orange */
+}
+
+/* Rendre l'ensemble responsive */
+@media screen and (max-width: 600px) {
+    form {
+        width: 90%;
+    }
+    form select, form input, form button {
+        width: 90%;  /* 90% de largeur sur petit écran */
+    }
+}

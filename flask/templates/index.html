@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+    <title>Text-to-Speech</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, select, button { margin: 10px; padding: 10px; }
+        #speaker_options, #speakerSelection, #upload_section, #record_section { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Upload a File or Use Your Own Voice</h1>
+
+    <form id="ttsForm" action="/upload" method="post" enctype="multipart/form-data">
+        <label for="model">Choose a model:</label>
+        <select id="model" name="model">
+            {% for model in models %}
+                <option value="{{ model }}">
+                    {% if model == "your_tts" %}
+                        Your Voice
+                    {% elif model == "xtts_v2" %}
+                        IA
+                    {% else %}
+                        {{ model }}
+                    {% endif %}
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- Speaker Options -->
+        <div id="speaker_options">
+            <label>Use a Voice File or Record New:</label>
+            <select id="voiceOption">
+                <option value="upload">Upload Voice File</option>
+                <option value="record">Record New Voice</option>
+            </select>
+
+            <div id="upload_section">
+                <label>Upload WAV File:</label>
+                <input type="file" id="speakerInput" name="speaker_wav" accept=".wav">
+            </div>
+
+            <div id="record_section">
+                <a href="/record">Record Your Voice</a>
+            </div>
+        </div>
+
+        <!-- Speaker Selection -->
+        <div id="speakerSelection">
+            <label for="speaker">Choose a speaker:</label>
+            <select id="speaker" name="speaker">
+                {% if "xtts_v2" in models %}
+                    {% for speaker in models["xtts_v2"]["speakers"] %}
+                        <option value="{{ speaker }}">{{ speaker }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+
+        <!-- File Upload for Document -->
+        <label for="file">Upload a document (PDF/DOCX):</label>
+        <input type="file" id="file" name="file" accept=".pdf, .docx">
+
+        <button type="submit">Convert to Speech</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function updateUIBasedOnModel() {
+        let model = document.getElementById("model").value;
+        let speakerOptions = document.getElementById("speaker_options");
+        let speakerSelection = document.getElementById("speakerSelection");
+
+        if (model === "your_tts") {
+            speakerOptions.style.display = "block";  // Show voice options
+            speakerSelection.style.display = "none";  // Hide speaker selection for xtts_v2
+        } else if (model === "xtts_v2") {
+            speakerOptions.style.display = "none";  // Hide voice options for 'your_tts'
+            speakerSelection.style.display = "block";  // Show speaker selection for xtts_v2
+        } else {
+            speakerOptions.style.display = "none";  
+            speakerSelection.style.display = "none";  
+        }
+    }
+
+    function updateVoiceOption() {
+    let voiceOption = document.getElementById("voiceOption");
+    if (!voiceOption) return; // Prevents errors if element doesn't exist
+
+    document.getElementById("upload_section").style.display = voiceOption.value === "upload" ? "block" : "none";
+    document.getElementById("record_section").style.display = voiceOption.value === "record" ? "block" : "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("model").addEventListener("change", updateUIBasedOnModel);
+
+        let voiceOption = document.getElementById("voiceOption");
+        if (voiceOption) {
+            voiceOption.addEventListener("change", updateVoiceOption);
+        }
+
+        updateUIBasedOnModel();
+        updateVoiceOption();
+    });
+
+
+
+
+        // Form submit handler
+        document.getElementById("ttsForm").onsubmit = async function(e) {
+            e.preventDefault();
+            let formData = new FormData();
+            formData.append("model", document.getElementById("model").value);
+            formData.append("file", document.getElementById("file").files[0]);
+
+            // If using 'your_tts' model, check if user uploaded a voice file
+            if (document.getElementById("model").value === "your_tts") {
+                if (document.getElementById("voiceOption").value === "upload") {
+                    let speakerFile = document.getElementById("speakerInput").files[0];
+                    if (speakerFile) {
+                        formData.append("speaker_wav", speakerFile);
+                    }
+                }
+            } else if (document.getElementById("model").value === "xtts_v2") {
+                let speaker = document.getElementById("speaker").value;
+                formData.append("speaker", speaker);
+            }
+
+            // Send form data to the server
+            let response = await fetch("/upload", { method: "POST", body: formData });
+            let result = await response.json();
+
+            // Handle the result (displaying audio)
+            if (result.error) {
+                document.getElementById("result").innerText = "Error: " + result.error;
+            } else {
+                document.getElementById("result").innerHTML = 
+                "<audio controls><source src='" + result.audio + "' type='audio/wav'></audio>";
+            }
+        };
+    </script>
+</body>
+</html>
