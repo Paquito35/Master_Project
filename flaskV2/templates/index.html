@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/code/styles.css">
+    <title>Livre Text-to-Speech</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, select, button { margin: 10px; padding: 10px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="page-number" class="page-number">Page 1</div>
+        <div class="flipbook">
+            <!-- Couverture -->
+            <div class="hard cover">
+                <div class="welcome-message">Bienvenue</div>
+                <form id="loginForm">
+                    <input type="text" id="username" placeholder="Nom d'utilisateur">
+                    <input type="password" id="password" placeholder="Mot de passe">
+                    <button type="submit">Se connecter</button>
+                </form>
+            </div>
+
+            <!-- Pages 2-3: Choix du modèle -->
+            <div class="page">
+                <h2>Choisir un modèle de voix</h2>
+            </div>
+            <div class="page">
+                <label for="model">Modèle :</label>
+                <select id="model" name="model">
+                    <option value="" disabled selected>-- Sélectionnez une option --</option>
+                    <option value="your_tts">Votre voix</option>
+                    <option value="xtts_v2">Voix pré-enregistrée</option>
+                </select>
+            </div>
+
+            <!-- Pages 4-5: Dynamique selon le choix précédent -->
+            <div class="page hidden" id="speaker_options">
+                <h2>Utiliser un fichier audio ou enregistrer ?</h2>
+            </div>
+            <div class="page hidden" id="speaker_choice">
+                <select id="voiceOption">
+                    <option value="" disabled selected>-- Sélectionnez une option --</option>
+                    <option value="upload">Télécharger un fichier audio</option>
+                    <option value="record">Enregistrer une nouvelle voix</option>
+                </select>
+            </div>
+
+            <!-- Pages 6-7: Enregistrement de la voix -->
+            <div class="page hidden" id="recordingPage1">
+                <div class="container">
+                    <h1>Enregistrez votre voix</h1>
+                    <label>Appuyez sur le bouton et lisez ce texte :</label>
+                    <p id="textToRead">"Le chat agile saute sur le canapé..."</p>
+                </div>
+            </div>
+            <div class="page hidden" id="recordingPage2">
+                <input type="text" id="recordingName" placeholder="Nom du fichier (ex: ma_voix)">
+                <div class="container">
+                    <button id="startRecording">Démarrer l'enregistrement</button>
+                    <button id="stopRecording" disabled>Arrêter</button>
+                </div>
+            </div>
+
+            <!-- Pages 8-9: Upload d'un fichier audio ou Enregistrement -->
+            <div class="page hidden" id="upload_section1">
+                <h2>Choisir une de vos voix</h2>
+            </div>
+            <div class="page hidden" id="upload_section2">
+                <select id="speaker-your-tts" name="speaker-your-tts">
+                    <option value="" disabled selected>-- Sélectionnez une voix --</option>
+                    {% if "your_tts" in models %}
+                        {% for speaker in models["your_tts"]["speakers"] %}
+                            <option value="{{ speaker }}">{{ speaker }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+
+            <!-- Pages 10-11: Choix du locuteur si IA sélectionnée -->
+            <div class="page hidden" id="speakerSelection1">
+                <h2>Choisir un locuteur</h2>
+                <p>Si vous avez déjà choisi votre voix ne tenez pas compte de cette page</p>
+            </div>
+            <div class="page hidden" id="speakerSelection2">
+                <label for="speaker-xtts">Locuteur :</label>
+                <select id="speaker-xtts" name="speaker-xtts">
+                    <option value="" disabled selected>-- Sélectionnez une voix --</option>
+                    {% if "xtts_v2" in models %}
+                        {% for speaker in models["xtts_v2"]["speakers"] %}
+                            <option value="{{ speaker }}">{{ speaker }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+
+            <!-- Pages 12-13: Choix de l’histoire -->
+            <div class="page" id="storyPage1">
+                <h2>Choisissez une histoire</h2>
+                <label for="storyFile">Téléchargez un document (PDF/DOCX) :</label>
+            </div>
+            <div class="page" id="storyPage2">
+                <input type="file" id="storyFile" name="file" accept=".pdf, .docx">
+            </div>
+
+            <!-- Page 14: Convert to Speech -->
+            <div class="page" id="synthPage1">
+                <div id="loadingCircle" class="hidden">Loading...</div>
+            </div>
+            <div class="page" id="synthPage2">
+                <audio id="audioPlayer" class="hidden" controls>
+                    <source id="audioSource" type="audio/wav">
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+
+
+
+            <!-- Quatrième de couverture -->
+            <div class="hard cover-back">
+                <div class="thank-you-message">Fin</div>
+            </div>            
+        </div>
+    </div>
+
+    <script src="static/code/jquery.js"></script>
+    <script src="static/code/turn.js"></script>
+    <script src="static/code/script.js" defer></script>
+    <script>
+        console.log("📂 script.js est bien chargé !");
+    </script>
+</body>
+</html>

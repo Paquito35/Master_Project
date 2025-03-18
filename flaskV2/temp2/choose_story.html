@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+    <title>Choose Story</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, select, button { margin: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Choose Story</h1>
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+        <label for="model">Chosen Model:</label>
+        <input type="text" id="model" name="model" value="{{ model }}" readonly>
+
+        <label for="speaker_wav">Speaker WAV:</label>
+        <input type="text" id="speaker_wav" name="speaker_wav" value="{{ speaker_wav }}" readonly>
+
+        <label for="speaker_id">Speaker ID:</label>
+        <input type="text" id="speaker_id" name="speaker_id" value="{{ speaker_id }}" readonly>
+
+        <label for="file">Upload a document (PDF/DOCX):</label>
+        <input type="file" id="file" name="file" accept=".pdf, .docx">
+
+        <button type="submit" id="convertButton">Convert to Speech</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById("uploadForm").onsubmit = async function(e) {
+            e.preventDefault();
+            let formData = new FormData(e.target);
+            let convertButton = document.getElementById("convertButton");
+            convertButton.innerText = "Converting...";
+            convertButton.disabled = true;
+
+            let response = await fetch("/upload", { method: "POST", body: formData });
+            let result = await response.json();
+
+            if (result.error) {
+                document.getElementById("result").innerText = "Error: " + result.error;
+            } else {
+                document.getElementById("result").innerHTML =
+                "<audio controls><source src='" + result.audio + "' type='audio/wav'></audio>";
+            }
+
+            convertButton.innerText = "New";
+            convertButton.disabled = false;
+            convertButton.onclick = function() {
+                window.location.href = "/choose_model";
+            };
+        };
+    </script>
+</body>
+</html>

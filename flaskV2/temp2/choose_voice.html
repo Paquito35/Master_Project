@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+    <title>Choose Voice</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, select, button { margin: 10px; padding: 10px; }
+        #speaker_options, #speakerSelection, #upload_section, #record_section { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Choose Voice</h1>
+    <form action="/choose_story" method="post">
+        <label for="model">Chosen Model:</label>
+        <input type="text" id="model" name="model" value="{{ model }}" readonly>
+
+        <!-- Speaker Options -->
+        <div id="speaker_options">
+            <label>Use a Voice File or Record New:</label>
+            <select id="voiceOption">
+                <option value="upload">Upload Voice File</option>
+                <option value="record">Record New Voice</option>
+            </select>
+
+            <div id="upload_section">
+                <label>Upload WAV File:</label>
+                <input type="file" id="speakerInput" name="speaker_wav" accept=".wav">
+            </div>
+
+            <div id="record_section">
+                <a href="/record">Record Your Voice</a>
+            </div>
+        </div>
+
+        <!-- Speaker Selection -->
+        <div id="speakerSelection">
+            <label for="speaker">Choose a speaker:</label>
+            <select id="speaker" name="speaker">
+                {% if "xtts_v2" in models %}
+                    {% for speaker in models["xtts_v2"]["speakers"] %}
+                        <option value="{{ speaker }}">{{ speaker }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+
+        <button type="submit">Next</button>
+    </form>
+
+    <script>
+        function updateUIBasedOnModel() {
+            let model = document.getElementById("model").value;
+            let speakerOptions = document.getElementById("speaker_options");
+            let speakerSelection = document.getElementById("speakerSelection");
+
+            if (model === "your_tts") {
+                speakerOptions.style.display = "block";
+                speakerSelection.style.display = "none";
+            } else if (model === "xtts_v2") {
+                speakerOptions.style.display = "none";
+                speakerSelection.style.display = "block";
+            } else {
+                speakerOptions.style.display = "none";
+                speakerSelection.style.display = "none";
+            }
+        }
+
+        function updateVoiceOption() {
+            let voiceOption = document.getElementById("voiceOption");
+            if (!voiceOption) return;
+
+            document.getElementById("upload_section").style.display = voiceOption.value === "upload" ? "block" : "none";
+            document.getElementById("record_section").style.display = voiceOption.value === "record" ? "block" : "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("model").addEventListener("change", updateUIBasedOnModel);
+
+            let voiceOption = document.getElementById("voiceOption");
+            if (voiceOption) {
+                voiceOption.addEventListener("change", updateVoiceOption);
+            }
+
+            updateUIBasedOnModel();
+            updateVoiceOption();
+        });
+    </script>
+</body>
+</html>
