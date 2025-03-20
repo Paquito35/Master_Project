@@ -14,7 +14,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("/static/image.png") no-repeat center center fixed;
+    background: url("/static/ressources/image.png") no-repeat center center fixed;
     background-size: cover;
     z-index: -1;
 }
@@ -61,7 +61,7 @@ body {
 
 /* Styles de la couverture */
 .flipbook .hard {
-    background: #8B4513 !important;
+    background: #2B2D39 !important;
     color: white;
     font-family: 'Dancing Script', cursive;
     font-weight: bold;
@@ -70,49 +70,100 @@ body {
     align-items: center;
     text-align: center;
     border: none;
+    width: 100%; /* Assure que l'élément prend toute la largeur disponible */
+    position: relative;
+    height: 100%; /* Assure que l'élément prend toute la hauteur disponible */
+    overflow: hidden; /* Empêche le débordement */
     font-size: 2em;
     text-shadow: 2px 2px #aaa;
 }
 
-.flipbook .cover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.flipbook .cover form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.flipbook .cover input {
-    margin: 5px 0;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid white;
-    text-align: center;
-}
-
-.flipbook .cover button {
-    margin-top: 10px;
-    padding: 10px;
-    background: #FFD700;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+/* Style pour l'image de couverture */
+.flipbook .hard .cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Assure que l'image couvre tout l'élément */
+    display: block; /* Assure que l'image prend tout l'espace disponible */
 }
 
 .flipbook .page {
-    background: white;
+    background: #eddcc2;
+    background-size: cover; /* Assure que l'image couvre tout l'élément */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
     border: 1px solid rgba(0, 0, 0, 0.11);
+    width: 100%; /* Assure que l'élément prend toute la largeur disponible */
+    height: 100%; /* Assure que l'élément prend toute la hauteur disponible */
+    position: relative; /* Assure que l'élément est positionné correctement */
+}
+
+.background-image-bottom {
+    position: absolute;
+    bottom: 10px; /* Positionne l'image en bas de la page */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px; /* Ajustez la taille selon vos besoins */
+    opacity: 0.8; /* Ajustez l'opacité selon vos préférences */
+    z-index: 0; /* Assure que l'image est derrière le contenu */
+    pointer-events: none; /* Empêche les interactions avec l'image */
+}
+
+.background-image-bottom-left {
+    position: absolute;
+    bottom: 10px; /* Positionne l'image en bas de la page */
+    left: 20%;
+    transform: translateX(-50%);
+    width: 100px; /* Ajustez la taille selon vos besoins */
+    opacity: 0.8; /* Ajustez l'opacité selon vos préférences */
+    z-index: 0; /* Assure que l'image est derrière le contenu */
+    pointer-events: none; /* Empêche les interactions avec l'image */
+}
+
+.background-image-bottom-right {
+    position: absolute;
+    bottom: 10px; /* Positionne l'image en bas de la page */
+    left: 80%;
+    transform: translateX(-50%);
+    width: 100px; /* Ajustez la taille selon vos besoins */
+    opacity: 0.8; /* Ajustez l'opacité selon vos préférences */
+    z-index: 0; /* Assure que l'image est derrière le contenu */
+    pointer-events: none; /* Empêche les interactions avec l'image */
+}
+
+.background-image-top {
+    position: absolute;
+    top: 10px; /* Positionne l'image en bas de la page */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px; /* Ajustez la taille selon vos besoins */
+    opacity: 0.8; /* Ajustez l'opacité selon vos préférences */
+    z-index: 0; /* Assure que l'image est derrière le contenu */
+    pointer-events: none; /* Empêche les interactions avec l'image */
+}
+
+.background-image-top-left {
+    position: absolute;
+    top: 10px; /* Positionne l'image en bas de la page */
+    left: 20%;
+    transform: translateX(-50%);
+    width: 100px; /* Ajustez la taille selon vos besoins */
+    opacity: 0.8; /* Ajustez l'opacité selon vos préférences */
+    z-index: 0; /* Assure que l'image est derrière le contenu */
+    pointer-events: none; /* Empêche les interactions avec l'image */
+}
+/* Style pour les images d'arrière-plan */
+.background-image-top-right {
+    position: absolute;
+    top: 10px; /* Positionne l'image en bas de la page */
+    left: 75%;
+    transform: translateX(-50%);
+    width: 100px; /* Ajustez la taille selon vos besoins */
+    opacity: 0.8; /* Ajustez l'opacité selon vos préférences */
+    z-index: 0; /* Assure que l'image est derrière le contenu */
+    pointer-events: none; /* Empêche les interactions avec l'image */
 }
 
 /* Correction : Boutons fonctionnels */
@@ -154,18 +205,9 @@ button:hover {
         font-size: 1.5em;
     }
 .hidden {
-        display: none;
+    display: none;
     }
 audio {
         width: 100%;
         margin-top: 20px;
     }
-
-.welcome-message, .thank-you-message {
-    background: #8B4513 !important;
-    font-family: 'Dancing Script', cursive;
-    font-size: 2em;
-    color: #FFDF00;
-    text-align: center;
-    text-shadow: 1px 1px #222222;
-}

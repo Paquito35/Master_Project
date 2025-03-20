@@ -418,7 +418,12 @@ document.addEventListener("DOMContentLoaded", function() {
         
                 // Afficher le spinner de chargement
                 const loadingCircle = document.getElementById("loadingCircle");
-                loadingCircle.classList.remove("hidden");
+                if (loadingCircle) {
+                    loadingCircle.classList.remove("hidden");
+                    console.log("Spinner de chargement affiché.");
+                } else {
+                    console.error("❌ Élément #loadingCircle introuvable !");
+                }
         
                 fetch("/upload", {
                     method: "POST",
@@ -435,8 +440,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     //alert(result.text);
         
                     // Masquer le spinner de chargement
-                    loadingCircle.classList.add("hidden");
-        
+                    if (loadingCircle) {
+                        loadingCircle.style.display = 'none';
+                        console.log("Spinner de chargement enlever.");
+                    } else {
+                        console.error("❌ Élément #loadingCircle introuvable !");
+                    }
                     // Afficher le lecteur audio
                     const audioPlayer = document.getElementById("audioPlayer");
                     const audioSource = document.getElementById("audioSource");
