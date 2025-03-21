@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@300;400;600&display=swap');
 
+
+@font-face {
+    font-family: 'Sunday-Regular';
+    src: url('/static/ressources/Sunday-Regular.ttf') format('truetype'); /* Ajustez le chemin selon l'emplacement de votre fichier */
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Sunday-Regular', cursive;
 }
 
 body::before {
