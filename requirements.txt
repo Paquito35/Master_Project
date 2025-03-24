@@ -1,0 +1,8 @@
+sounddevice
+tkinter
+PyPDF2
+docx
+torch
+wave
+numpy
+TTS
