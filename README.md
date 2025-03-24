@@ -1,8 +1,8 @@
-# Text-to-Speech Book
+# Voice4Kids
 
 ## 📖 Description
 
-Text-to-Speech Book est une application web permettant de convertir des fichiers PDF ou DOCX en audio grâce à des modèles de synthèse vocale. L'utilisateur peut sélectionner différents modèles de voix et personnaliser la sortie audio pour une expérience optimale.
+Voice4Kids est une application web permettant de convertir des fichiers PDF ou DOCX en audio grâce à des modèles de synthèse vocale. L'utilisateur peut sélectionner différents modèles de voix et personnaliser la sortie audio pour une expérience optimale.
 
 ## ✨ Fonctionnalités
 
