@@ -6,10 +6,10 @@ Text-to-Speech Book est une application web permettant de convertir des fichiers
 
 ## ✨ Fonctionnalités
 
-✅ **Conversion de texte en parole** : Transformez des documents PDF ou DOCX en fichiers audio.
-✅ **Choix de modèles de voix** : Sélectionnez parmi plusieurs voix pour une personnalisation optimale.
-✅ **Enregistrement de voix personnalisées** : Enregistrez votre propre voix et utilisez-la dans la synthèse vocale.
-✅ **Interface utilisateur interactive** : Une navigation intuitive pour faciliter le processus de conversion.
+✅ **Conversion de texte en parole** : Transformez des documents PDF ou DOCX en fichiers audio.    
+✅ **Choix de modèles de voix** : Sélectionnez parmi plusieurs voix pour une personnalisation optimale.   
+✅ **Enregistrement de voix personnalisées** : Enregistrez votre propre voix et utilisez-la dans la synthèse vocale.   
+✅ **Interface utilisateur interactive** : Une navigation intuitive pour faciliter le processus de conversion.   
 
 ---
 
