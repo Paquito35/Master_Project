@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ### 3️⃣ Configurer l'environnement :
 
-- Assurez-vous d'avoir **Python 3.x** installé.   
+- Assurez-vous d'avoir **Python 3.10.12** installé.   
 - Installez les dépendances nécessaires pour **PyTorch** et les modèles **TTS**.   
 
 ### 4️⃣ Lancer l'application :
